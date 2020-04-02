@@ -21,11 +21,13 @@
     "*.{js,ts}": "npm run lint"
   },
   "dependencies": {
+    "dotenv-safe": "^8.2.0",
     "express": "^4.17.1",
     "pino": "^6.0.0",
     "pino-pretty": "^4.0.0"
   },
   "devDependencies": {
+    "@types/dotenv-safe": "^8.1.0",
     "@types/express": "^4.17.4",
     "@types/node": "^13.11.0",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
