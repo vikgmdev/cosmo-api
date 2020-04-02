@@ -4,7 +4,10 @@
   "description": "Tortuga Descalza API",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "tsc",
+    "lint": "eslint . --max-warnings=0 --ext .js,.ts --ignore-path .gitignore --ignore-pattern '!.eslintrc.js' --ignore-pattern '!.prettierrc.js'",
+    "start": "nodemon -r ts-node/register/transpile-only src/index.ts | pino-pretty",
+    "start-debug": "nodemon -r ts-node/register/transpile-only --inspect src/index.ts"
   },
   "author": "Victor Garcia @vikgmdev vikgm.dev@gmail.com",
   "license": "ISC",
