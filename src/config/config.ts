@@ -4,21 +4,23 @@
  * @interface Config
  */
 interface Config {
+  debug: boolean;
+  env: string;
+  logLevel: string;
   name: string;
   port: number;
-  env: string;
-  debug: boolean;
-  logLevel: string;
+  requestLimit: string;
   version: string;
 }
 
 // default settings are for development environment
 const config: Config = {
-  name: process.env.API_NAME || 'API Server',
+  debug: Boolean(process.env.DEBUG) || true,
   env: process.env.NODE_ENV || 'development',
   logLevel: process.env.LOG_LEVEL || 'debug',
-  debug: Boolean(process.env.DEBUG) || true,
-  port: Number(process.env.PORT) || 4000,
+  name: process.env.API_NAME || 'API Server',
+  port: Number(process.env.PORT) || 3000,
+  requestLimit: process.env.REQUEST_LIMIT || '100kb',
   version: process.env.API_VERSION || '1.0.0',
 };
 
