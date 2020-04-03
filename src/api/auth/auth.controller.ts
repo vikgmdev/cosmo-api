@@ -42,3 +42,16 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
         return next(handleError(err));
     }
 }
+
+export const updatePasswordAndLogin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { password, token } = req.body;
+        logger.debug('POST /auth/update-password-and-login : secret params');
+        const result = await AuthService.updatePasswordAndLogin(password, token);
+        logger.debug('POST /auth/update-password-and-login response:', JSON.stringify(result));
+        res.status(HTTPStatus.OK).json(result);
+        return next();
+    } catch (err) {
+        return next(handleError(err));
+    }
+}
