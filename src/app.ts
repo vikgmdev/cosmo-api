@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import { config } from './config';
-import routes from './routes';
+import routes from './api/routes';
 
 const app = express();
 
