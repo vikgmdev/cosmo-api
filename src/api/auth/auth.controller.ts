@@ -29,3 +29,16 @@ export const sendPasswordRecoveryEmail = async (req: Request, res: Response, nex
         return next(handleError(err));
     }
 }
+
+export const signup = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { email, password, fullname } = req.body;
+        logger.debug('POST /auth/signup :', JSON.stringify({ email, fullname }));
+        const result = await AuthService.signup(email, password, fullname);
+        logger.debug('POST /auth/signup response:', JSON.stringify(result));
+        res.status(HTTPStatus.OK).json(result);
+        return next();
+    } catch (err) {
+        return next(handleError(err));
+    }
+}
