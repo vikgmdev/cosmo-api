@@ -1,3 +1,4 @@
+import './core/env';
 import { config } from './config';
 import { logger } from './utils';
 import app from './app';
