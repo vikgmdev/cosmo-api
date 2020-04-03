@@ -16,3 +16,16 @@ export const confirmEmail = async (req: Request, res: Response, next: NextFuncti
         return next(handleError(err));
     }
 }
+
+export const sendPasswordRecoveryEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { email } = req.query;
+        logger.debug('GET /auth/send-password-recovery-email :', JSON.stringify({ email }));
+        const result = await AuthService.sendPasswordRecoveryEmail(email);
+        logger.debug('GET /auth/send-password-recovery-email response:', JSON.stringify(result));
+        res.status(HTTPStatus.OK).json(result);
+        return next();
+    } catch (err) {
+        return next(handleError(err));
+    }
+}
