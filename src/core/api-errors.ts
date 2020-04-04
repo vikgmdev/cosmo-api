@@ -9,7 +9,7 @@ export class UnexpectedError extends AbstractError {
 export class UnauthorizedError extends AbstractError {
   errorCode = 2001;
   statusCode = 403;
-  errorMessage = 'Operation not allowed';
+  errorMessage = 'Unauthorized';
 }
 
 /**
