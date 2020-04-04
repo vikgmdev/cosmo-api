@@ -1,5 +1,7 @@
+import { Request } from 'express';
 import { PaginationQuery, UserFilter } from '../types';
 import { User } from '../models';
+import { Helpers } from '../../helpers';
 
 const getFiltersQuery = (queryParam: UserFilter) => {
   let filters = {};
@@ -51,4 +53,17 @@ export const find = async (filter: UserFilter, paginationQuery: PaginationQuery)
     items,
     totalCount,
   };
+};
+
+export const me = async (req: Request): Promise<any> => {
+  const token = await Helpers.token.getTokenFromRequest(req);
+
+  if (!token) throw 'tokenNotPresent';
+
+  // validate the token
+  const user = await Helpers.token.validateJwtToken(token);
+
+  if (!user) throw 'tokenInvalid';
+
+  return user;
 };
