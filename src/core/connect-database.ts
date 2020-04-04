@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 import { logger } from '../utils';
-import { databaseConfig } from '../config';
+import { Config } from '../config';
 
 const connectDatabase = (): void => {
   const userPass =
-    databaseConfig.mongoUser && databaseConfig.mongoPassword
-      ? `${databaseConfig.mongoUser}:${databaseConfig.mongoPassword}@`
+    Config.database.mongoUser && Config.database.mongoPassword
+      ? `${Config.database.mongoUser}:${Config.database.mongoPassword}@`
       : '';
-  const connectionURI = `mongodb://${userPass}${databaseConfig.mongoHost}:${databaseConfig.mongoPort}/${databaseConfig.mongoDB}`;
+  const connectionURI = `mongodb://${userPass}${Config.database.mongoHost}:${Config.database.mongoPort}/${Config.database.mongoDB}`;
   mongoose.connect(connectionURI, {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -17,7 +17,7 @@ const connectDatabase = (): void => {
   connection.on('error', (err) => logger.error('MongoDB connection error', err));
   connection.once('open', () => {
     logger.debug(
-      `✔ MongoDB connection stablished at mongodb://${databaseConfig.mongoHost}:${databaseConfig.mongoPort}/${databaseConfig.mongoDB}`,
+      `✔ MongoDB connection stablished at mongodb://${Config.database.mongoHost}:${Config.database.mongoPort}/${Config.database.mongoDB}`,
     );
   });
 };

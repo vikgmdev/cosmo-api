@@ -1,8 +1,8 @@
 import './core/env';
-import { config } from './config';
+import { Config } from './config';
 import { logger } from './utils';
 import app from './app';
 
-app.listen({ port: config.port }, (): void => {
-  logger.info(`🚀 ${config.name} up and running in ${config.env} @ http://localhost:${config.port}`);
+app.listen({ port: Config.app.port }, (): void => {
+  logger.info(`🚀 ${Config.app.name} up and running in ${Config.app.env} @ http://localhost:${Config.app.port}`);
 });
