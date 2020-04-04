@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import uuid from 'node-uuid';
 import { Config } from '../../config';
-import { UserModel } from '../../api/user/user.model';
+import { UserModel } from '../../api/models';
 
 export default async function createToken(req: Request, user: UserModel, rememberMe: boolean = false) {
   const jsonWebTokens = Config.jwt || {};

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { UserModel } from '../user/user.model';
+import { UserModel } from './user.model';
 
 export interface JwtModel extends mongoose.Document {
   expires: number;

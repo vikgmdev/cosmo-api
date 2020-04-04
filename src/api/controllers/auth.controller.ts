@@ -1,14 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import * as HTTPStatus from 'http-status-codes';
-import { handleError } from '../../core';
-import { logger } from '../../utils';
-import * as AuthService from './auth.service';
+import { handleError, logger } from '../../core';
+import { AuthService } from '../services';
 
 export const confirmEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { token } = req.query;
     logger.debug('GET /auth/email/confirm : secret params');
-    const result = await AuthService.confirmEmail(token);
+    const result = await AuthService.confirmEmail(token, req);
     logger.debug('GET /auth/email/confirm response:', JSON.stringify(result));
     res.status(HTTPStatus.OK).json(result);
     return next();
@@ -34,7 +33,7 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
   try {
     const { email, password, fullName } = req.body;
     logger.debug(`POST /auth/signup : ${JSON.stringify({ email, fullName })}`);
-    const result = await AuthService.signup(email, password, fullName);
+    const result = await AuthService.signup(email, password, fullName, req);
     logger.debug(`POST /auth/signup response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();
@@ -47,7 +46,7 @@ export const updatePasswordAndLogin = async (req: Request, res: Response, next: 
   try {
     const { password, token } = req.body;
     logger.debug('POST /auth/update-password-and-login : secret params');
-    const result = await AuthService.updatePasswordAndLogin(password, token);
+    const result = await AuthService.updatePasswordAndLogin(password, token, req);
     logger.debug('POST /auth/update-password-and-login response:', JSON.stringify(result));
     res.status(HTTPStatus.OK).json(result);
     return next();
@@ -58,9 +57,9 @@ export const updatePasswordAndLogin = async (req: Request, res: Response, next: 
 
 export const login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { email, password } = req.body;
+    const { email, password, rememberMe = false } = req.body;
     logger.debug('PUT /auth/login :', JSON.stringify({ email }));
-    const result = await AuthService.login(email, password);
+    const result = await AuthService.login(email, password, rememberMe, req);
     logger.debug('PUT /auth/login response:', JSON.stringify(result));
     res.status(HTTPStatus.OK).json(result);
     return next();

@@ -1,4 +1,4 @@
 import express from 'express';
-import * as RoleController from './role.controller';
+import { RoleController } from '../controllers';
 
 export default express.Router().get('/find', RoleController.find);

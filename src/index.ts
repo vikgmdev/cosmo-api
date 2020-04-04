@@ -1,6 +1,6 @@
 import './core/env';
 import { Config } from './config';
-import { logger } from './utils';
+import { logger } from './core';
 import app from './app';
 
 app.listen({ port: Config.app.port }, (): void => {

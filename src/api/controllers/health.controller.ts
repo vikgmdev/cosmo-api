@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as HTTPStatus from 'http-status-codes';
-import { handleError } from '../../core';
-import { logger } from '../../utils';
-import * as HealthService from './health.service';
+import { handleError, logger } from '../../core';
+import { HealthService } from '../services';
 
 export const health = (_req: Request, res: Response, next: NextFunction): void => {
   try {

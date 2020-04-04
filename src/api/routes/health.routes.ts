@@ -1,4 +1,4 @@
 import express from 'express';
-import * as HealthController from './health.controller';
+import { HealthController } from '../controllers';
 
 export default express.Router().get('/', HealthController.health);

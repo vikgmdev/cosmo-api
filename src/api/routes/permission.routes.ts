@@ -1,4 +1,4 @@
 import express from 'express';
-import * as PermissionController from './permission.controller';
+import { PermissionController } from '../controllers';
 
 export default express.Router().get('/find', PermissionController.find);

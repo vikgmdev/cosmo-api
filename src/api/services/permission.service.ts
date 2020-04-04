@@ -1,6 +1,6 @@
-import { PaginationQuery } from '../../types';
-import { PermissionFilter } from './permission.types';
-import { Permission } from './permission.model';
+import { PaginationQuery } from '../types';
+import { Permission } from '../models';
+import { PermissionFilter } from '../types/permission.types';
 
 export const find = async (filter: PermissionFilter, paginationQuery: PaginationQuery): Promise<any> => {
   const entities = await Permission.find()

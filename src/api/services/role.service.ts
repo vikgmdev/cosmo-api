@@ -1,6 +1,5 @@
-import { PaginationQuery } from '../../types';
-import { RoleFilter } from './role.types';
-import { Role } from './role.model';
+import { PaginationQuery, RoleFilter } from '../types';
+import { Role } from '../models';
 
 export const find = async (filter: RoleFilter, paginationQuery: PaginationQuery): Promise<any> => {
   const entities = await Role.find()

@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import * as HTTPStatus from 'http-status-codes';
 import { Helpers } from '../../helpers';
-import { handleError } from '../../core';
-import { logger } from '../../utils';
-import * as UserService from './user.service';
+import { handleError, logger } from '../../core';
+import { UserService } from '../services';
 
 export const find = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {

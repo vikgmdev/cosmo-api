@@ -1,6 +1,6 @@
 import BaseError from './abstract-error';
 import { UnexpectedError } from './api-errors';
-import logger from '../utils/logger';
+import { logger } from './';
 
 const handleError = (err: Error | BaseError): Error => {
   if (err instanceof BaseError) {

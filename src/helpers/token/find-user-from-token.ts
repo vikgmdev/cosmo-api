@@ -6,7 +6,7 @@
  *                          found or an error has occured
  */
 
-import { User } from '../../api/user/user.model';
+import { User } from '../../api/models';
 
 export default async function findUserFromToken(token: any) {
   // deserialize the token iss

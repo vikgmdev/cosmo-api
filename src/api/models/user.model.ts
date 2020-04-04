@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { omit } from 'ramda';
-import { RoleModel } from '../role/role.model';
+import { RoleModel } from './role.model';
 
 export interface UserModel extends mongoose.Document {
   email: string;

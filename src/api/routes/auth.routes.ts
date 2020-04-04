@@ -1,5 +1,5 @@
 import express from 'express';
-import * as AuthController from './auth.controller';
+import { AuthController } from '../controllers';
 
 export default express
   .Router()
