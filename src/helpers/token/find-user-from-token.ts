@@ -12,7 +12,7 @@ export default async function findUserFromToken(token: any) {
   // deserialize the token iss
   const [_iss] = token.iss.split('|');
 
-  const user = await User.findOne(_iss).populate('roles');
+  const user = await User.findById(_iss).populate('roles');
 
   if (!user) {
     // throw notFound('Could not find User from given JWToken.');
