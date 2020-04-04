@@ -15,3 +15,15 @@ export const find = async (req: Request, res: Response, next: NextFunction): Pro
     return next(handleError(err));
   }
 };
+
+export const me = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug('GET /user/me : no params');
+    const result = await UserService.me(req);
+    logger.debug(`GET /user/me response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
