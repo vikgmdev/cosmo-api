@@ -17,14 +17,6 @@ const jwtConfig = {
   // user to it during the hasJsonWebToken
   // middleware
   stateless: false,
-
-  // set the name of the jwt token property
-  // in the JSON response
-  tokenProperty: 'token',
-
-  // set the name of the expires property
-  // in the JSON response
-  expiresProperty: 'expires',
 };
 
 export default jwtConfig;
