@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     toJSON: {
-      transform: (doc, ret) => {
+      transform: (doc, ret): any => {
         return omit(['password'], ret);
       },
     },
