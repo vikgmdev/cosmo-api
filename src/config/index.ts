@@ -1,2 +1,9 @@
-export { default as config } from './config';
-export { default as databaseConfig } from './database-config';
+import app from './app';
+import database from './database';
+import jwt from './jwt';
+
+export const Config = {
+  app,
+  database,
+  jwt,
+};
