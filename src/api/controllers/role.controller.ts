@@ -28,3 +28,17 @@ export const getRolePermissions = async (req: Request, res: Response, next: Next
     return next(handleError(err));
   }
 };
+
+export const updateRolePermissions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { roleId } = req.params;
+    const permissions = req.body;
+    logger.debug(`PUT /role/:roleId/permissions : ${JSON.stringify({ roleId, permissions })}`);
+    const result = await RoleService.updateRolePermissions(roleId, permissions);
+    logger.debug(`PUT /role/:roleId/permissions response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
