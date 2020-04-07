@@ -16,6 +16,18 @@ export const confirmEmail = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
+export const me = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug('GET /auth/me : no params');
+    const result = await AuthService.me(req);
+    logger.debug(`GET /auth/me response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
+
 export const sendPasswordRecoveryEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { email } = req.query;
