@@ -43,3 +43,7 @@ export const find = async (filter: RoleFilter, paginationQuery: PaginationQuery)
     totalCount,
   };
 };
+
+export const getRolePermissions = async (roleId: string): Promise<any> => {
+  return await Role.findById(roleId).populate('permissions').exec();
+};
