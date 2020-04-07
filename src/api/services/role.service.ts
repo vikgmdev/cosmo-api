@@ -44,6 +44,16 @@ export const find = async (filter: RoleFilter, paginationQuery: PaginationQuery)
   };
 };
 
+export const getById = async (id: string): Promise<any> => {
+  const role = await Role.findById(id).populate('permissions');
+
+  if (!role) {
+    // throw notFound('Could not find the Role with the given ID');
+  }
+
+  return role;
+};
+
 export const getRolePermissions = async (roleId: string): Promise<any> => {
   return await Role.findById(roleId).populate('permissions').exec();
 };
