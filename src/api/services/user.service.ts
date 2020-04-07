@@ -1,7 +1,5 @@
-import { Request } from 'express';
 import { PaginationQuery, UserFilter } from '../types';
 import { User } from '../models';
-import { Helpers } from '../../helpers';
 
 const getFiltersQuery = (queryParam: UserFilter) => {
   let filters = {};
@@ -71,6 +69,17 @@ export const deleteById = async (id: string): Promise<any> => {
   if (!user) {
     // throw notFound('Could not find the User with the given ID');
   }
-  
+
+  return user;
+};
+
+export const updateUserRoles = async (id: string, roles: any[]): Promise<any> => {
+  const user = await User.findById(id).exec();
+
+  if (!user) throw 'User does not exists';
+
+  user.roles = roles;
+  user.save();
+
   return user;
 };
