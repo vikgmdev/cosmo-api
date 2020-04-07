@@ -54,3 +54,13 @@ export const find = async (filter: UserFilter, paginationQuery: PaginationQuery)
     totalCount,
   };
 };
+
+export const getById = async (id: string): Promise<any> => {
+  const user = await User.findById(id).populate('roles');
+
+  if (!user) {
+    // throw notFound('Could not find the User with the given ID');
+  }
+
+  return user;
+};
