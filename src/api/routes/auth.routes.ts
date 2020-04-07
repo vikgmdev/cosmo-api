@@ -8,4 +8,5 @@ export default express
   .get('/send-password-recovery-email', AuthController.sendPasswordRecoveryEmail)
   .post('/signup', AuthController.signup)
   .post('/update-password-and-login', AuthController.updatePasswordAndLogin)
-  .put('/login', AuthController.login);
+  .put('/login', AuthController.login)
+  .put('/update-password', AuthController.updatePassword);

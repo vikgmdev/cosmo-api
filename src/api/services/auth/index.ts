@@ -4,3 +4,4 @@ export * from './me';
 export * from './send-password-recovery-email';
 export * from './signup';
 export * from './update-password-and-login';
+export * from './update-password';
