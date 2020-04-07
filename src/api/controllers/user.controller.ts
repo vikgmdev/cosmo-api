@@ -41,3 +41,17 @@ export const deleteById = async (req: Request, res: Response, next: NextFunction
     return next(handleError(err));
   }
 };
+
+export const updateUserRoles = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug(`PUT /user/:id/roles : ${JSON.stringify(req.params)}`);
+    const { id } = req.params;
+    const roles = req.body;
+    const result = await UserService.updateUserRoles(id, roles);
+    logger.debug(`PUT /user/:id/roles response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
