@@ -54,12 +54,12 @@ export const signup = async (req: Request, res: Response, next: NextFunction): P
   }
 };
 
-export const updatePasswordAndLogin = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const recoverPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { password, token } = req.body;
-    logger.debug(`POST /auth/update-password-and-login : secret params`);
-    const result = await AuthService.updatePasswordAndLogin(password, token, req);
-    logger.debug(`POST /auth/update-password-and-login response: ${JSON.stringify(result)}`);
+    logger.debug(`POST /auth/recover-password : secret params`);
+    const result = await AuthService.recoverPassword(password, token, req);
+    logger.debug(`POST /auth/recover-password response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();
   } catch (err) {

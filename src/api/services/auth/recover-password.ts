@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { Helpers } from '../../../helpers';
 import { User } from '../../models';
 
-export const updatePasswordAndLogin = async (password: string, token: string, req: Request): Promise<any> => {
+export const recoverPassword = async (password: string, token: string, req: Request): Promise<any> => {
   if (!token) {
     throw 'invalidToken';
   }
@@ -28,5 +28,5 @@ export const updatePasswordAndLogin = async (password: string, token: string, re
   // Log the user in.
   req.me.id = userRecord.id;
 
-  return { message: 'The password was successfully updated.' };
+  return { message: 'The password was successfully recovered.' };
 };
