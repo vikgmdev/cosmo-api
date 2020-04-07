@@ -3,5 +3,5 @@ import { UserController } from '../controllers';
 
 export default express
   .Router()
-  .get('/find', UserController.find)
+  .get('/', UserController.find)
   .get('/:id', UserController.getById);
