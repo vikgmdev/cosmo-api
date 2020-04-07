@@ -5,4 +5,5 @@ export default express
   .Router()
   .get('/', UserController.find)
   .get('/:id', UserController.getById)
-  .delete('/:id', UserController.deleteById);
+  .delete('/:id', UserController.deleteById)
+  .put('/:id/roles', UserController.updateUserRoles);
