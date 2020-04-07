@@ -15,3 +15,16 @@ export const find = async (req: Request, res: Response, next: NextFunction): Pro
     return next(handleError(err));
   }
 };
+
+export const getRolePermissions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { roleId } = req.params;
+    logger.debug(`GET /role/:roleId/permissions : ${JSON.stringify(req.params)}`);
+    const result = await RoleService.getRolePermissions(roleId);
+    logger.debug(`GET /role/:roleId/permissions response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
