@@ -1,5 +1,5 @@
 import { PaginationQuery, RoleFilter } from '../types';
-import { Role } from '../models';
+import { Role, RoleModel } from '../models';
 
 const getFiltersQuery = (queryParam: RoleFilter) => {
   let filters = {};
@@ -54,6 +54,11 @@ export const getById = async (id: string): Promise<any> => {
   return role;
 };
 
+export const create = async (role: RoleModel): Promise<any> => {
+  const newRole = await new Role(role).save();
+  return newRole;
+};
+
 export const getRolePermissions = async (roleId: string): Promise<any> => {
   return await Role.findById(roleId).populate('permissions').exec();
 };
@@ -62,7 +67,7 @@ export const updateRolePermissions = async (roleId: string, permissions: any[]):
   const role = await Role.findById(roleId).exec();
 
   if (!role) throw 'Role does not exists';
-  
+
   role.permissions = permissions;
   role.save();
 
