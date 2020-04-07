@@ -6,4 +6,5 @@ export default express
   .get('/', UserController.find)
   .get('/:id', UserController.getById)
   .delete('/:id', UserController.deleteById)
+  .put('/:id', UserController.update)
   .put('/:id/roles', UserController.updateUserRoles);

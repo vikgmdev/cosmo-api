@@ -1,5 +1,5 @@
 import { PaginationQuery, UserFilter } from '../types';
-import { User } from '../models';
+import { User, UserModel } from '../models';
 
 const getFiltersQuery = (queryParam: UserFilter) => {
   let filters = {};
@@ -61,6 +61,17 @@ export const getById = async (id: string): Promise<any> => {
   }
 
   return user;
+};
+
+export const update = async (id: string, user: UserModel): Promise<any> => {
+  const userToUpdate = await User.findById(id).exec();
+
+  if (!userToUpdate) throw 'User does not exists';
+
+  if (user.fullName) userToUpdate.fullName = user.fullName;
+  userToUpdate.save();
+
+  return userToUpdate;
 };
 
 export const deleteById = async (id: string): Promise<any> => {

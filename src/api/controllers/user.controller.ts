@@ -42,6 +42,20 @@ export const deleteById = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+export const update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const user = req.body;
+    logger.debug(`PUT /user/:id : ${JSON.stringify(id, user)}`);
+    const result = await UserService.update(id, user);
+    logger.debug(`PUT /user/:id response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
+
 export const updateUserRoles = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     logger.debug(`PUT /user/:id/roles : ${JSON.stringify(req.params)}`);
