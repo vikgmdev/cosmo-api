@@ -47,3 +47,14 @@ export const find = async (filter: RoleFilter, paginationQuery: PaginationQuery)
 export const getRolePermissions = async (roleId: string): Promise<any> => {
   return await Role.findById(roleId).populate('permissions').exec();
 };
+
+export const updateRolePermissions = async (roleId: string, permissions: any[]): Promise<any> => {
+  const role = await Role.findById(roleId).exec();
+
+  if (!role) throw 'Role does not exists';
+  
+  role.permissions = permissions;
+  role.save();
+
+  return role;
+};
