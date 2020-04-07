@@ -64,3 +64,13 @@ export const getById = async (id: string): Promise<any> => {
 
   return user;
 };
+
+export const deleteById = async (id: string): Promise<any> => {
+  const user = await User.findByIdAndDelete(id);
+
+  if (!user) {
+    // throw notFound('Could not find the User with the given ID');
+  }
+  
+  return user;
+};
