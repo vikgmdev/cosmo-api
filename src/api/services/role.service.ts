@@ -73,3 +73,13 @@ export const updateRolePermissions = async (roleId: string, permissions: any[]):
 
   return role;
 };
+
+export const deleteById = async (id: string): Promise<any> => {
+  const role = await Role.findByIdAndDelete(id);
+
+  if (!role) {
+    // throw notFound('Could not find the Role with the given ID');
+  }
+
+  return role;
+};
