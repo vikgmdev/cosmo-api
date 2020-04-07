@@ -59,12 +59,25 @@ export const create = async (role: RoleModel): Promise<any> => {
   return newRole;
 };
 
-export const getRolePermissions = async (roleId: string): Promise<any> => {
-  return await Role.findById(roleId).populate('permissions').exec();
+export const update = async (id: string, role: RoleModel): Promise<any> => {
+  const roleToUpdate = await Role.findById(id).exec();
+
+  if (!roleToUpdate) throw 'Role does not exists';
+
+  if (role.title) roleToUpdate.title = role.title;
+  if (role.isCoreRole) roleToUpdate.isCoreRole = role.isCoreRole;
+  if (role.isDefaultRole) roleToUpdate.isDefaultRole = role.isDefaultRole;
+  roleToUpdate.save();
+
+  return roleToUpdate;
 };
 
-export const updateRolePermissions = async (roleId: string, permissions: any[]): Promise<any> => {
-  const role = await Role.findById(roleId).exec();
+export const getRolePermissions = async (id: string): Promise<any> => {
+  return await Role.findById(id).populate('permissions').exec();
+};
+
+export const updateRolePermissions = async (id: string, permissions: any[]): Promise<any> => {
+  const role = await Role.findById(id).exec();
 
   if (!role) throw 'Role does not exists';
 

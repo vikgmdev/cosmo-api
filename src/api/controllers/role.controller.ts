@@ -55,6 +55,20 @@ export const create = async (req: Request, res: Response, next: NextFunction): P
   }
 };
 
+export const update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const role = req.body;
+    logger.debug(`PUT /role/:id : ${JSON.stringify(id, role)}`);
+    const result = await RoleService.update(id, role);
+    logger.debug(`PUT /role/:id response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
+
 export const getRolePermissions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { roleId } = req.params;
