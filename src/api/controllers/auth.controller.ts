@@ -79,3 +79,16 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     return next(handleError(err));
   }
 };
+
+export const updatePassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    logger.debug(`PUT /auth/update-password : secret params`);
+    const result = await AuthService.updatePassword(currentPassword, newPassword, req);
+    logger.debug(`PUT /auth/update-password response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
