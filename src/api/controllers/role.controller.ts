@@ -29,6 +29,19 @@ export const getById = async (req: Request, res: Response, next: NextFunction): 
   }
 };
 
+export const deleteById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug(`DELETE /role/:id : ${JSON.stringify(req.params)}`);
+    const { id } = req.params;
+    const result = await RoleService.deleteById(id);
+    logger.debug(`DELETE /role/:id response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
+
 export const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     logger.debug(`POST /role : ${JSON.stringify(req.body)}`);
