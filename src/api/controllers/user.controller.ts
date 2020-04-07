@@ -28,3 +28,16 @@ export const getById = async (req: Request, res: Response, next: NextFunction): 
     return next(handleError(err));
   }
 };
+
+export const deleteById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug(`DELETE /user/:id : ${JSON.stringify(req.params)}`);
+    const { id } = req.params;
+    const result = await UserService.deleteById(id);
+    logger.debug(`DELETE /user/:id response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
