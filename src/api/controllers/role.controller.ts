@@ -29,6 +29,19 @@ export const getById = async (req: Request, res: Response, next: NextFunction): 
   }
 };
 
+export const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug(`POST /role : ${JSON.stringify(req.body)}`);
+    const role = req.body;
+    const result = await RoleService.create(role);
+    logger.debug(`POST /role response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
+
 export const getRolePermissions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { roleId } = req.params;
