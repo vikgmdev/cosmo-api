@@ -7,6 +7,7 @@
     "compile": "tsc",
     "lint": "eslint . --max-warnings=0 --ext .js,.ts --ignore-path .gitignore --ignore-pattern '!.eslintrc.js' --ignore-pattern '!.prettierrc.js'",
     "start": "nodemon -r ts-node/register/transpile-only src/index.ts | pino-pretty",
+    "start-seed": "nodemon -r ts-node/register/transpile-only src/index.ts seed | pino-pretty",
     "start-debug": "nodemon -r ts-node/register/transpile-only --inspect src/index.ts"
   },
   "author": "Victor Garcia @vikgmdev vikgm.dev@gmail.com",
