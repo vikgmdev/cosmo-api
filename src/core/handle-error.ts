@@ -4,12 +4,12 @@ import { logger } from './';
 
 const handleError = (err: Error | BaseError): Error => {
   if (err instanceof BaseError) {
-    logger.error(err.toJSON(), 'Error caught');
+    logger.error(err.message, 'Error caught');
     return err;
   }
 
   const error = new UnexpectedError(err.message);
-  logger.error(error.toJSON(), 'Unexpected Error caught');
+  logger.error(error.message, 'Unexpected Error caught');
   return error;
 };
 
