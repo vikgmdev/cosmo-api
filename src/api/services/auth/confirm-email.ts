@@ -28,7 +28,7 @@ export const confirmEmail = async (token: string, req: Request): Promise<any> =>
       emailProofToken: '',
       emailProofTokenExpiresAt: 0,
     });
-    req.me.id = user.id;
+    req.me = user;
 
     return { message: 'The email was successfully confirmed.' };
   } else if (user.emailStatus === 'changeRequested') {
@@ -60,7 +60,7 @@ export const confirmEmail = async (token: string, req: Request): Promise<any> =>
       email: user.emailChangeCandidate,
       emailChangeCandidate: '',
     });
-    req.me.id = user.id;
+    req.me = user;
     return { message: 'The email was successfully confirmed.' };
   } else {
     throw new Error(
