@@ -26,7 +26,7 @@ export const recoverPassword = async (password: string, token: string, req: Requ
   });
 
   // Log the user in.
-  req.me.id = userRecord.id;
+  req.me = userRecord;
 
   return { message: 'The password was successfully recovered.' };
 };
