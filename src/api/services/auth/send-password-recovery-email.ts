@@ -27,7 +27,7 @@ export const sendPasswordRecoveryEmail = async (email: string): Promise<any> => 
     subject: 'Restablecimiento de contraseña',
     template: 'email-reset-password',
     templateData: {
-      fullname: userRecord.fullName,
+      fullName: userRecord.fullName,
       token: token,
     },
   });
