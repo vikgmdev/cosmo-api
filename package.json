@@ -33,6 +33,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.9.7",
     "node-uuid": "^1.4.8",
+    "nodemailer": "^6.4.6",
     "pino": "^6.0.0",
     "pino-pretty": "^4.0.0",
     "ramda": "^0.27.0"
@@ -45,6 +46,7 @@
     "@types/mongoose": "^5.7.8",
     "@types/node": "^13.11.0",
     "@types/node-uuid": "0.0.28",
+    "@types/nodemailer": "^6.4.0",
     "@types/pino": "^5.17.0",
     "@types/ramda": "^0.27.3",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
