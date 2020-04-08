@@ -10,6 +10,7 @@ const connectDatabase = (): void => {
   const connectionURI = `mongodb://${userPass}${Config.database.mongoHost}:${Config.database.mongoPort}/${Config.database.mongoDB}`;
   mongoose.connect(connectionURI, {
     useCreateIndex: true,
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
