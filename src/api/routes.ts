@@ -1,5 +1,6 @@
 import { Application } from 'express';
 import AccountRoutes from './routes/account.routes';
+import AppointmentRoutes from './routes/appointment.routes';
 import AuthRoutes from './routes/auth.routes';
 import HealthRoutes from './routes/health.routes';
 import PermissionRoutes from './routes/permission.routes';
@@ -13,6 +14,7 @@ export default function routes(app: Application): void {
 
   // Private : Token needed
   app.use('/account', isLoggedIn, AccountRoutes);
+  app.use('/appointment', isLoggedIn, AppointmentRoutes);
   app.use('/health', isLoggedIn, HealthRoutes);
   app.use('/permission', isLoggedIn, PermissionRoutes);
   app.use('/role', isLoggedIn, RoleRoutes);
