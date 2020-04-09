@@ -1,18 +1,19 @@
 import { Config } from '../../../config';
 import { Helpers } from '../../../helpers';
 import { User } from '../../models';
+import { ResponseSuccess } from '../../types';
 
-export const sendPasswordRecoveryEmail = async (email: string): Promise<any> => {
+export const sendPasswordRecoveryEmail = async (email: string): Promise<ResponseSuccess> => {
   // Find the record for this user.
   // (Even if no such user exists, pretend it worked to discourage sniffing.)
-  var userRecord = await User.findOne({ email });
+  const userRecord = await User.findOne({ email });
   if (!userRecord) {
     return {};
   }
 
   // Come up with a pseudorandom, probabilistically-unique token for use
   // in our password recovery email.
-  var token = await Helpers.utils.randomString();
+  const token = await Helpers.utils.randomString();
 
   // Store the token on the user record
   // (This allows us to look up the user when the link from the email is clicked.)

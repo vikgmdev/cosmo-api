@@ -1,14 +1,10 @@
 import { Request } from 'express';
 import { Attempt, Jwt, User } from '../../models';
+import { Account } from '../../types';
 import { Helpers } from '../../../helpers';
 import { logger } from '../../../core';
 
-export const login = async (
-  email: string,
-  password: string,
-  rememberMe: boolean = false,
-  req: Request,
-): Promise<any> => {
+export const login = async (email: string, password: string, rememberMe = false, req: Request): Promise<Account> => {
   // Look up by the email address.
   // (note that we lowercase it to ensure the lookup is always case-insensitive,
   // regardless of which database we're using)

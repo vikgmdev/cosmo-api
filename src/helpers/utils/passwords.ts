@@ -5,5 +5,5 @@ export async function hashPassword(password: string): Promise<string> {
 }
 
 export async function checkPassword(password: string, hashedPassword: string): Promise<boolean> {
-  return await hashPassword(password) === hashedPassword;
+  return (await hashPassword(password)) === hashedPassword;
 }

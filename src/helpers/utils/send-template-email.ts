@@ -34,9 +34,11 @@ import { Helpers } from '..';
 
 interface EmailInput {
   template: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   templateData: any;
   to: string;
   subject: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   layout?: any;
 }
 
@@ -46,7 +48,7 @@ export default async function sendTemplateEmail({
   to,
   subject = '',
   layout,
-}: EmailInput): Promise<any> {
+}: EmailInput): Promise<{ loggedInsteadOfSending: boolean }> {
   if (!startsWith('email-', path.basename(template))) {
     logger.warn(
       `The "template" that was passed in to \`utils.sendTemplateEmail()\` does not begin with 
@@ -90,7 +92,7 @@ export default async function sendTemplateEmail({
   // > for convenience during development, but also for safety.  (For example,
   // > a special-cased version of "user@example.com" is used by Trend Micro Mars
   // > scanner to "check apks for malware".)
-  var isToAddressConsideredFake = Boolean(to.match(/@example\.com$/i));
+  const isToAddressConsideredFake = Boolean(to.match(/@example\.com$/i));
 
   // If that's the case, or if we're in the "test" environment, then log
   // the email instead of sending it:
@@ -116,8 +118,8 @@ export default async function sendTemplateEmail({
       throw new Error(
         `Cannot deliver email to "${to}" because:
       ` +
-          (() => {
-            let problems = [];
+          ((): string => {
+            const problems = [];
             if (!Config.email.host) {
               problems.push(" • SMTP host is missing from this app's configuration (`Config.email.host`)");
             }

@@ -5,17 +5,17 @@
  * @param  {Function} cb    Callback to be called when a user is
  *                          found or an error has occured
  */
+import { User, UserModel } from '../../api/models';
 
-import { User } from '../../api/models';
-
-export default async function findUserFromToken(token: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function findUserFromToken(token: any): Promise<UserModel> {
   // deserialize the token iss
   const [_iss] = token.iss.split('|');
 
   const user = await User.findById(_iss).populate('roles');
 
   if (!user) {
-    // throw notFound('Could not find User from given JWToken.');
+    throw 'Could not find User from given JWToken.';
   }
 
   return user;

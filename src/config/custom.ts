@@ -16,7 +16,7 @@ const customConfig = {
   // The sender that all outgoing emails will appear to come from.
   supportEmail: 'tortugadescalza@taotechia.org',
   baseUrl: 'http://tortugadescalza.com',
-  frontUrl: 'http://tortugadescalza.com'
+  frontUrl: 'http://tortugadescalza.com',
 };
 
 export default customConfig;

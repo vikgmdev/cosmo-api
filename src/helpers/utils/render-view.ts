@@ -3,7 +3,8 @@ import url from 'url';
 import { Config } from '../../config';
 import { logger } from '../../core';
 
-export default async function renderView(template: string, data: any, layout: string) {
+// eslint-disable-next-line
+export default async function renderView(template: string, data: any, _layout: string): Promise<string> {
   try {
     // Render the template view to generate the body of the view
     const emailHtml = await ejs.renderFile(__dirname + `/../../../views/${template}.ejs`, {

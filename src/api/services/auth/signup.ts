@@ -3,13 +3,14 @@ import { Attempt, Role, User } from '../../models';
 import { Config } from '../../../config';
 import { Helpers } from '../../../helpers';
 import { logger } from '../../../core';
+import { Account } from '../../types';
 
-export const signup = async (email: string, password: string, fullName: string, req: Request): Promise<any> => {
-  var newEmailAddress = email.toLowerCase();
+export const signup = async (email: string, password: string, fullName: string, req: Request): Promise<Account> => {
+  const newEmailAddress = email.toLowerCase();
 
   // Build up data for the new user record and save it to the database.
   // (Also use `fetch` to retrieve the new ID so that we can use it below.)
-  var newUserRecord = await new User(
+  const newUserRecord = await new User(
     Object.assign(
       {
         email: newEmailAddress,
@@ -32,7 +33,7 @@ export const signup = async (email: string, password: string, fullName: string, 
   });
 
   if (defaultRole) {
-    newUserRecord.roles.push(defaultRole);
+    newUserRecord.roles = [...newUserRecord.roles, defaultRole.id];
     newUserRecord.save();
   }
 

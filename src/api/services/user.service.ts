@@ -1,9 +1,10 @@
-import { PaginationQuery, UserFilter } from '../types';
+import { PaginationQuery, UserFilter, ResponsePagination } from '../types';
 import { User, UserModel } from '../models';
 
-const getFiltersQuery = (queryParam: UserFilter) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getFiltersQuery = (queryParam: UserFilter): any => {
   let filters = {};
-  let orQuery = [];
+  const orQuery = [];
 
   if (queryParam) {
     const query = queryParam;
@@ -36,7 +37,10 @@ const getFiltersQuery = (queryParam: UserFilter) => {
   return filters;
 };
 
-export const find = async (filter: UserFilter, paginationQuery: PaginationQuery): Promise<any> => {
+export const find = async (
+  filter: UserFilter,
+  paginationQuery: PaginationQuery,
+): Promise<ResponsePagination<UserModel>> => {
   // Run the query
   const totalCount = await User.estimatedDocumentCount();
 
@@ -53,17 +57,17 @@ export const find = async (filter: UserFilter, paginationQuery: PaginationQuery)
   };
 };
 
-export const getById = async (id: string): Promise<any> => {
+export const getById = async (id: string): Promise<UserModel> => {
   const user = await User.findById(id).populate('roles');
 
   if (!user) {
-    // throw notFound('Could not find the User with the given ID');
+    throw 'Could not find the User with the given ID';
   }
 
   return user;
 };
 
-export const update = async (id: string, user: UserModel): Promise<any> => {
+export const update = async (id: string, user: UserModel): Promise<UserModel> => {
   const userToUpdate = await User.findById(id).exec();
 
   if (!userToUpdate) throw 'User does not exists';
@@ -74,17 +78,17 @@ export const update = async (id: string, user: UserModel): Promise<any> => {
   return userToUpdate;
 };
 
-export const deleteById = async (id: string): Promise<any> => {
+export const deleteById = async (id: string): Promise<UserModel> => {
   const user = await User.findByIdAndDelete(id);
 
   if (!user) {
-    // throw notFound('Could not find the User with the given ID');
+    throw 'Could not find the User with the given ID';
   }
 
   return user;
 };
 
-export const updateUserRoles = async (id: string, roles: any[]): Promise<any> => {
+export const updateUserRoles = async (id: string, roles: string[]): Promise<UserModel> => {
   const user = await User.findById(id).exec();
 
   if (!user) throw 'User does not exists';

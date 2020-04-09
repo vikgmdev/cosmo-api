@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { DocumentToObjectOptions } from 'mongoose';
 import { omit } from 'ramda';
 import { RoleModel } from './role.model';
 
@@ -6,7 +6,7 @@ export interface UserModel extends mongoose.Document {
   email: string;
   password: string;
   fullName: string;
-  roles: RoleModel[];
+  roles: RoleModel[] | string[];
   passwordResetToken: string;
   passwordResetTokenExpiresAt: number;
   emailProofToken: string;
@@ -106,7 +106,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     toJSON: {
-      transform: (doc, ret): any => {
+      transform: (_doc, ret): DocumentToObjectOptions => {
         return omit(
           [
             'password',

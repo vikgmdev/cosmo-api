@@ -4,7 +4,7 @@
  */
 import { Request } from 'express';
 
-export default async function getTokenFromRequest(req: Request) {
+export default async function getTokenFromRequest(req: Request): Promise<string> {
   // Get access token.
   let accessToken;
 

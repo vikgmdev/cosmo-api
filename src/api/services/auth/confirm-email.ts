@@ -1,14 +1,15 @@
 import { Request } from 'express';
 import { User } from '../../models';
+import { ResponseSuccess } from '../../types';
 
-export const confirmEmail = async (token: string, req: Request): Promise<any> => {
+export const confirmEmail = async (token: string, req: Request): Promise<ResponseSuccess> => {
   // If no token was provided, this is automatically invalid.
   if (!token) {
     throw 'invalidOrExpiredToken';
   }
 
   // Get the user with the matching email token.
-  var user = await User.findOne({ emailProofToken: token });
+  const user = await User.findOne({ emailProofToken: token });
 
   // If no such user exists, or their token is expired, bail.
   if (!user || user.emailProofTokenExpiresAt <= Date.now()) {

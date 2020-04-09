@@ -1,8 +1,11 @@
-import { PaginationQuery } from '../types';
-import { Permission } from '../models';
+import { PaginationQuery, ResponsePagination } from '../types';
+import { Permission, PermissionModel } from '../models';
 import { PermissionFilter } from '../types/permission.types';
 
-export const find = async (_filter: PermissionFilter, paginationQuery: PaginationQuery): Promise<any> => {
+export const find = async (
+  _filter: PermissionFilter,
+  paginationQuery: PaginationQuery,
+): Promise<ResponsePagination<PermissionModel>> => {
   // Run the query
   const totalCount = await Permission.estimatedDocumentCount();
 

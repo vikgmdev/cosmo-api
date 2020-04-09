@@ -1,7 +1,8 @@
 import { Request } from 'express';
 import { Helpers } from '../../../helpers';
+import { UserModel } from '../../models';
 
-export const me = async (req: Request): Promise<any> => {
+export const me = async (req: Request): Promise<UserModel> => {
   const token = await Helpers.token.getTokenFromRequest(req);
 
   if (!token) throw 'tokenNotPresent';

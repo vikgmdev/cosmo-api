@@ -9,7 +9,7 @@ import { Request } from 'express';
 import { Helpers } from '..';
 import { UnauthorizedError } from '../../core';
 
-export default async function validateTokenRequest(req: Request) {
+export default async function validateTokenRequest(req: Request): Promise<boolean> {
   const token = await Helpers.token.getTokenFromRequest(req);
 
   if (!token) throw new UnauthorizedError();

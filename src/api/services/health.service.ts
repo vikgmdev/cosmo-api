@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-// @ts-ignore
 import { version } from '../../../package.json';
 
 interface HealthResult {
@@ -34,6 +33,7 @@ function getDatabaseConnectionStatus(): number {
 
 export const health = (): HealthResult => {
   return {
+    // eslint-disable-next-line  @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     mongoose: MongooseStatesMap[getDatabaseConnectionStatus()],
     nodeVersion: process.version,

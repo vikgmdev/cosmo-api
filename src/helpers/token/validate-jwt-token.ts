@@ -8,16 +8,18 @@ import jwt from 'jsonwebtoken';
 import { Config } from '../../config';
 import { Helpers } from '..';
 import { UnauthorizedError } from '../../core';
+import { UserModel } from '../../api/models';
 
-export default  async function validateJwtToken(token: any) {
+export default async function validateJwtToken(token: string): Promise<UserModel> {
   // decode the token
+  // eslint-disable-next-line  @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   const _token = jwt.decode(token, Config.jwt.secret);
 
   if (!_token) throw new UnauthorizedError();
 
   // set the time of the request
-  var _reqTime = Date.now();
+  const _reqTime = Date.now();
 
   // If token is expired
   if (_token.exp <= _reqTime) {

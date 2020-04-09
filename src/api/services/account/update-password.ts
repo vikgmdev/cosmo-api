@@ -1,8 +1,13 @@
 import { Request } from 'express';
 import { Helpers } from '../../../helpers';
 import { User } from '../../models';
+import { ResponseSuccess } from '../../types';
 
-export const updatePassword = async (currentPassword: string, newPassword: string, req: Request): Promise<any> => {
+export const updatePassword = async (
+  currentPassword: string,
+  newPassword: string,
+  req: Request,
+): Promise<ResponseSuccess> => {
   // If the password doesn't match, then also exit thru "badCombo".
   try {
     await Helpers.utils.passwords.checkPassword(currentPassword, req.me.password);

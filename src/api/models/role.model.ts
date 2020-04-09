@@ -3,7 +3,7 @@ import { PermissionModel } from './permission.model';
 
 export interface RoleModel extends mongoose.Document {
   title: string;
-  permissions: PermissionModel[];
+  permissions: PermissionModel[] | string[];
   isCoreRole: boolean;
   isDefaultRole: boolean;
 }

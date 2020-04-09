@@ -1,9 +1,10 @@
-import { PaginationQuery, RoleFilter } from '../types';
-import { Role, RoleModel } from '../models';
+import { PaginationQuery, RoleFilter, ResponsePagination } from '../types';
+import { Role, RoleModel, PermissionModel } from '../models';
 
-const getFiltersQuery = (queryParam: RoleFilter) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getFiltersQuery = (queryParam: RoleFilter): any => {
   let filters = {};
-  let orQuery = [];
+  const orQuery = [];
 
   if (queryParam) {
     const query = queryParam;
@@ -27,7 +28,10 @@ const getFiltersQuery = (queryParam: RoleFilter) => {
   return filters;
 };
 
-export const find = async (filter: RoleFilter, paginationQuery: PaginationQuery): Promise<any> => {
+export const find = async (
+  filter: RoleFilter,
+  paginationQuery: PaginationQuery,
+): Promise<ResponsePagination<RoleModel>> => {
   // Run the query
   const totalCount = await Role.estimatedDocumentCount();
 
@@ -44,22 +48,22 @@ export const find = async (filter: RoleFilter, paginationQuery: PaginationQuery)
   };
 };
 
-export const getById = async (id: string): Promise<any> => {
+export const getById = async (id: string): Promise<RoleModel> => {
   const role = await Role.findById(id).populate('permissions');
 
   if (!role) {
-    // throw notFound('Could not find the Role with the given ID');
+    throw 'Could not find the Role with the given ID';
   }
 
   return role;
 };
 
-export const create = async (role: RoleModel): Promise<any> => {
+export const create = async (role: RoleModel): Promise<RoleModel> => {
   const newRole = await new Role(role).save();
   return newRole;
 };
 
-export const update = async (id: string, role: RoleModel): Promise<any> => {
+export const update = async (id: string, role: RoleModel): Promise<RoleModel> => {
   const roleToUpdate = await Role.findById(id).exec();
 
   if (!roleToUpdate) throw 'Role does not exists';
@@ -72,11 +76,17 @@ export const update = async (id: string, role: RoleModel): Promise<any> => {
   return roleToUpdate;
 };
 
-export const getRolePermissions = async (id: string): Promise<any> => {
-  return await Role.findById(id).populate('permissions').exec();
+export const getRolePermissions = async (id: string): Promise<PermissionModel[]> => {
+  const role = await Role.findById(id).populate('permissions');
+
+  if (!role) {
+    throw 'Could not find the Role with the given ID';
+  }
+
+  return role.permissions as PermissionModel[];
 };
 
-export const updateRolePermissions = async (id: string, permissions: any[]): Promise<any> => {
+export const updateRolePermissions = async (id: string, permissions: string[]): Promise<RoleModel> => {
   const role = await Role.findById(id).exec();
 
   if (!role) throw 'Role does not exists';
@@ -87,11 +97,11 @@ export const updateRolePermissions = async (id: string, permissions: any[]): Pro
   return role;
 };
 
-export const deleteById = async (id: string): Promise<any> => {
+export const deleteById = async (id: string): Promise<RoleModel> => {
   const role = await Role.findByIdAndDelete(id);
 
   if (!role) {
-    // throw notFound('Could not find the Role with the given ID');
+    throw 'Could not find the Role with the given ID';
   }
 
   return role;

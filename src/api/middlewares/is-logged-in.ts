@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Helpers } from '../../helpers';
 
-export async function isLoggedIn(req: Request, res: Response, next: NextFunction) {
+export async function isLoggedIn(req: Request, res: Response, next: NextFunction): Promise<void> {
   const isValidToken = await Helpers.token.validateTokenRequest(req);
 
   if (isValidToken) {

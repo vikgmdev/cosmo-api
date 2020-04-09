@@ -7,7 +7,7 @@ const emailConfig = {
     pass: 'yZN6F!gq', // generated ethereal password
   },
   fromEmail: '"Tortuga Descalza 👻" <tortugadescalza@taotechia.org>',
-  fromEmailAddress: 'tortugadescalza@taotechia.org'
+  fromEmailAddress: 'tortugadescalza@taotechia.org',
 };
 
 export default emailConfig;
