@@ -1,11 +1,20 @@
 import mongoose, { DocumentToObjectOptions } from 'mongoose';
 import { omit } from 'ramda';
 import { RoleModel } from './role.model';
+import { Location } from '../types';
 
 export interface UserModel extends mongoose.Document {
+  birthDayTime: number;
+  gender: number;
+  placeOfBirth: Location;
+  placeOfResidence: Location;
+
+  // ACCOUNT DATA
   email: string;
   password: string;
   fullName: string;
+
+  // AUTH DATA
   roles: RoleModel[] | string[];
   passwordResetToken: string;
   passwordResetTokenExpiresAt: number;
@@ -19,6 +28,32 @@ export interface UserModel extends mongoose.Document {
 
 const userSchema = new mongoose.Schema(
   {
+    // CUSTOM
+    birthDayTime: {
+      type: 'number',
+    },
+    gender: {
+      type: 'number',
+      enum: [1, 2], // 1 = male | 2 = female
+    },
+    placeOfBirth: {
+      lat: {
+        type: 'string',
+      },
+      long: {
+        type: 'string',
+      },
+    },
+    placeOfResidence: {
+      lat: {
+        type: 'string',
+      },
+      long: {
+        type: 'string',
+      },
+    },
+
+    // ACCOUNT DATA
     email: {
       type: String,
       required: true,
