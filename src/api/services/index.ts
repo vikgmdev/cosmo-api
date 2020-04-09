@@ -1,3 +1,4 @@
+export * as AccountService from './account';
 export * as AuthService from './auth';
 export * as HealthService from './health.service';
 export * as PermissionService from './permission.service';
