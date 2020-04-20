@@ -5,7 +5,7 @@ export interface CosmoInfo {
 
 export interface PlanetInfo {
   planet: Planet;
-  longitude: String;
+  longitude: string;
   sign: Sign;
   house: number;
 }
