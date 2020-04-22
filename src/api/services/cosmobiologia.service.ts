@@ -1,142 +1,102 @@
 import { Request } from 'express';
-import { promisify } from 'util';
-const exec = promisify(require('child_process').exec);
-const signs = [
-  'Aries',
-  'Tauro',
-  'Geminis',
-  'Cancer',
-  'Leo',
-  'Virgo',
-  'Libra',
-  'Scorpio',
-  'Sagitario',
-  'Capricornio',
-  'Aquario',
-  'Piscis',
-];
+import moment from 'moment';
+import { getCartaAstral } from '../../helpers/cosmobiologia/carta-astral';
+import { CartaAstral } from '../../helpers/cosmobiologia/cosmobiologia.constants';
 
 export const natal = async (req: Request): Promise<any> => {
-  format_sweph('07.05.1993', '3:55:00', -3.7025, 40.41638888888889).then((value) => {
-    console.log(value);
-    return value;
+  const dateTime = moment('1993-05-07T05:55:00+02:00').utc();
+
+  const date = dateTime.format('D.M.YYYY');
+  const time = dateTime.format('HH:mm:ss');
+
+  const cartaAstral = getCartaAstral(date, time, -3.7025, 40.41638888888889);
+  return cartaAstral;
+};
+
+export const progresado = async (req: Request): Promise<any> => {
+  const timezone = '-06:00';
+  const long = -103.33333333333333;
+  const lat = 20.6666667;
+  const dateTime = moment('1993-05-07T05:55:00' + timezone).utc();
+
+  const natalYear = dateTime.format('YYYY');
+  const currentYear = moment().format('YYYY');
+
+  const dateTimeProgresado = dateTime.add(Number(currentYear) - Number(natalYear), 'days');
+  const date = dateTimeProgresado.format('D.M.YYYY');
+  const time = dateTimeProgresado.format('HH:mm:ss');
+
+  const cartaAstral = getCartaAstral(date, time, long, lat);
+  return cartaAstral;
+};
+
+const calculateChanges = (oldCA: CartaAstral, newCA: CartaAstral): boolean => {
+  if (oldCA.planets.sun.sign !== newCA.planets.sun.sign) return true;
+  if (oldCA.planets.moon.sign !== newCA.planets.moon.sign) return true;
+  if (oldCA.planets.mercury.sign !== newCA.planets.mercury.sign) return true;
+  if (oldCA.planets.venus.sign !== newCA.planets.venus.sign) return true;
+  if (oldCA.planets.mars.sign !== newCA.planets.mars.sign) return true;
+  if (oldCA.planets.jupiter.sign !== newCA.planets.jupiter.sign) return true;
+  if (oldCA.planets.saturn.sign !== newCA.planets.saturn.sign) return true;
+  if (oldCA.planets.uranus.sign !== newCA.planets.uranus.sign) return true;
+  if (oldCA.planets.neptune.sign !== newCA.planets.neptune.sign) return true;
+  if (oldCA.planets.pluto.sign !== newCA.planets.pluto.sign) return true;
+  if (oldCA.planets.dragonHead.sign !== newCA.planets.dragonHead.sign) return true;
+  if (oldCA.planets.dragonTail.sign !== newCA.planets.dragonTail.sign) return true;
+  // if (oldCA.planets.fortuneWheel.sign !== newCA.planets.fortuneWheel.sign) return true;
+  return false;
+};
+
+export const life = async (req: Request): Promise<CartaAstral[]> => {
+  const timezone = '-06:00';
+  const long = -103.33333333333333;
+  const lat = 20.6666667;
+  const dateTime = moment('1993-05-07T05:55:00' + timezone).utc();
+
+  const changes: CartaAstral[] = [];
+
+  const natalDate = dateTime.format('D.M.YYYY');
+  const natalTime = dateTime.format('HH:mm:ss');
+  const cartaNatal = await getCartaAstral(natalDate, natalTime, long, lat);
+  changes.push({
+    date: dateTime.format(),
+    ...cartaNatal,
   });
-};
 
-const exec_sweph = async (date, time, long, lat) => {
-  try {
-    const { stdout, stderr } = await exec(
-      `/root/sweph/swetest -edir/root/sweph -b${date} -ut${time} -p0123456789At -eswe -house${long},${lat},p -g -head -fPlsj`,
-      {
-        encoding: 'utf8',
-      },
-    );
-    console.log('stdout:');
-    console.log(stdout);
-    console.log('stderr:', stderr);
-    return stdout;
-  } catch (err) {
-    console.error(err);
-  }
-};
+  for (let i = 1; i <= 125; i++) {
+    dateTime.add(1, 'days');
+    const date = dateTime.format('D.M.YYYY');
+    const time = dateTime.format('HH:mm:ss');
 
-const format_sweph = async (date, time, long, lat) => {
-  // Get data from sweph
-  const chart = await exec_sweph(date, time, long, lat);
+    const cartaAstral = await getCartaAstral(date, time, long, lat);
 
-  const planets = [];
-  const houses = [];
-  let sun_long = 0;
-  let moon_long = 0;
-  let ascendant_long = 0;
-  // Split all data in array separated with commas
-  chart.split(/\n/).forEach((line, index) => {
-    row = line.split('\t');
-    if (index < 12) {
-      const new_planet = {};
-      new_planet.planet = row[0].trim();
-      new_planet.longitude = convert_longitude(row[1], row[2]);
-      new_planet.sign = find_sign(row[1]);
-      new_planet.house = row[3];
-      planets.push(new_planet);
-    } else {
-      const new_house = {};
-      new_house.house = row[0].trim();
-      new_house.longitude = convert_longitude(row[1]);
-      new_house.sign = find_sign(row[1]);
-      houses.push(new_house);
+    const hasChanged = calculateChanges(changes[changes.length - 1], cartaAstral);
+
+    if (hasChanged) {
+      changes.push({
+        date: dateTime.format(),
+        ...cartaAstral,
+      });
     }
-
-    if (index == 0) sun_long = row[1];
-
-    if (index == 2) moon_long = row[1];
-
-    if (index == 13) ascendant_long = row[1];
-  });
-
-  planets.push(calculate_fortune(sun_long, moon_long, ascendant_long));
-
-  return {
-    planets: planets,
-    houses: houses,
-  };
-};
-
-const calculate_fortune = (sun_long, moon_long, ascendant_long) => {
-  sun_long = parseFloat(sun_long);
-  moon_long = parseFloat(moon_long);
-  ascendant_long = parseFloat(ascendant_long);
-  let planet_fortune = {};
-  planet_fortune.planet = 'P. of Fortune';
-  const day_chart = true;
-  let fortune_long;
-
-  if (day_chart) {
-    fortune_long = ascendant_long + moon_long - sun_long;
-  } else {
-    fortune_long = ascendant_long - moon_long + sun_long;
   }
 
-  if (fortune_long >= 360) fortune_long = fortune_long - 360;
-
-  if (fortune_long < 0) fortune_long = fortune_long + 360;
-
-  planet_fortune.longitude = convert_longitude(fortune_long);
-  planet_fortune.sign = find_sign(planet_fortune.longitude);
-  return planet_fortune;
-};
-
-const find_sign = (longitude) => {
-  const formated_longitude = convert_longitude(longitude);
-  const sign = signs.filter((long) => formated_longitude.includes(long))[0];
-  return sign;
-};
-
-const convert_longitude = (longitude, speed) => {
-  longitude = parseFloat(longitude);
-  const sign_num = Math.floor(longitude / 30);
-  const pos_in_sign = longitude - sign_num * 30;
-  let deg = Math.floor(pos_in_sign);
-  const full_min = (pos_in_sign - deg) * 60;
-  let min = Math.floor(full_min);
-  let full_sec = Math.round((full_min - min) * 60);
-  let retrograde = '';
-
-  if (deg < 10) {
-    deg = `0${deg}`;
-  }
-
-  if (min < 10) {
-    min = `0${min}`;
-  }
-
-  if (full_sec < 10) {
-    full_sec = `0${full_sec}`;
-  }
-
-  if (speed < 0) {
-    retrograde = 'R';
-  }
-
-  return `${deg}° ${signs[parseInt(sign_num)]} ${min}' ${full_sec}“ ${retrograde}`;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  return changes.map(({ date, planets }) => ({
+    date,
+    age: moment('1993-05-07T05:55:00' + timezone).diff(date, 'days') * -1,
+    sun: planets.sun.sign,
+    moon: planets.moon.sign,
+    mercury: planets.mercury.sign,
+    venus: planets.venus.sign,
+    mars: planets.mars.sign,
+    jupiter: planets.jupiter.sign,
+    saturn: planets.saturn.sign,
+    uranus: planets.uranus.sign,
+    neptune: planets.neptune.sign,
+    pluto: planets.pluto.sign,
+    dragonHead: planets.dragonHead.sign,
+    dragonTail: planets.dragonTail.sign,
+    fortuneWheel: planets.fortuneWheel.sign,
+  }));
 };
