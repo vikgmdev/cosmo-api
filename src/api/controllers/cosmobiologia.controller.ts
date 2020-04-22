@@ -14,3 +14,27 @@ export const natal = async (req: Request, res: Response, next: NextFunction): Pr
     return next(handleError(err));
   }
 };
+
+export const progresado = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug('GET /cosmobiologia/progresado : no params');
+    const result = await CosmobiologiaService.progresado(req);
+    logger.debug(`GET /cosmobiologia/progresado response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
+
+export const life = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug('GET /cosmobiologia/life : no params');
+    const result = await CosmobiologiaService.life(req);
+    logger.debug(`GET /cosmobiologia/life response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
