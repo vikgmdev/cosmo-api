@@ -71,10 +71,10 @@ export const update = async (req: Request, res: Response, next: NextFunction): P
 
 export const getRolePermissions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { roleId } = req.params;
-    logger.debug(`GET /role/:roleId/permissions : ${JSON.stringify(req.params)}`);
-    const result = await RoleService.getRolePermissions(roleId);
-    logger.debug(`GET /role/:roleId/permissions response: ${JSON.stringify(result)}`);
+    const { id } = req.params;
+    logger.debug(`GET /role/:id/permissions : ${JSON.stringify(req.params)}`);
+    const result = await RoleService.getRolePermissions(id);
+    logger.debug(`GET /role/:id/permissions response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();
   } catch (err) {
@@ -84,11 +84,11 @@ export const getRolePermissions = async (req: Request, res: Response, next: Next
 
 export const updateRolePermissions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { roleId } = req.params;
+    const { id } = req.params;
     const permissions = req.body;
-    logger.debug(`PUT /role/:roleId/permissions : ${JSON.stringify({ roleId, permissions })}`);
-    const result = await RoleService.updateRolePermissions(roleId, permissions);
-    logger.debug(`PUT /role/:roleId/permissions response: ${JSON.stringify(result)}`);
+    logger.debug(`PUT /role/:id/permissions : ${JSON.stringify({ id, permissions })}`);
+    const result = await RoleService.updateRolePermissions(id, permissions);
+    logger.debug(`PUT /role/:id/permissions response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();
   } catch (err) {
