@@ -68,9 +68,10 @@ export const update = async (id: string, role: RoleModel): Promise<RoleModel> =>
 
   if (!roleToUpdate) throw 'Role does not exists';
 
-  if (role.title) roleToUpdate.title = role.title;
   if (role.isCoreRole) roleToUpdate.isCoreRole = role.isCoreRole;
   if (role.isDefaultRole) roleToUpdate.isDefaultRole = role.isDefaultRole;
+  if (role.permissions) roleToUpdate.permissions = role.permissions;
+  if (role.title) roleToUpdate.title = role.title;
   roleToUpdate.save();
 
   return roleToUpdate;
