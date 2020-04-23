@@ -8,25 +8,35 @@ export interface RoleModel extends mongoose.Document {
   isDefaultRole: boolean;
 }
 
-const roleSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  permissions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Permission',
+const roleSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
     },
-  ],
-  isCoreRole: {
-    type: Boolean,
-    default: false,
+    permissions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Permission',
+      },
+    ],
+    isCoreRole: {
+      type: Boolean,
+      default: false,
+    },
+    isDefaultRole: {
+      type: Boolean,
+      default: false,
+    },
   },
-  isDefaultRole: {
-    type: Boolean,
-    default: false,
+  {
+    toObject: {
+      virtuals: true,
+    },
+    toJSON: {
+      virtuals: true,
+    },
   },
-});
+);
 
 export const Role = mongoose.model<RoleModel>('Role', roleSchema);

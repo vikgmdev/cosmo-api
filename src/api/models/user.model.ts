@@ -139,7 +139,11 @@ const userSchema = new mongoose.Schema(
       },
     ],
   },
+
   {
+    toObject: {
+      virtuals: true,
+    },
     toJSON: {
       transform: (_doc, ret): DocumentToObjectOptions => {
         return omit(
@@ -157,6 +161,7 @@ const userSchema = new mongoose.Schema(
           ret,
         );
       },
+      virtuals: true,
     },
   },
 );

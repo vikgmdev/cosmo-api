@@ -10,28 +10,38 @@ export interface AppointmentModel extends mongoose.Document {
   zoomLink: string;
 }
 
-const appointmentSchema = new mongoose.Schema({
-  comments: {
-    type: 'string',
+const appointmentSchema = new mongoose.Schema(
+  {
+    comments: {
+      type: 'string',
+    },
+    confirmed: {
+      type: 'boolean',
+    },
+    date: {
+      type: 'number',
+      required: true,
+    },
+    payed: {
+      type: 'boolean',
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    zoomLink: {
+      type: 'string',
+    },
   },
-  confirmed: {
-    type: 'boolean',
+  {
+    toObject: {
+      virtuals: true,
+    },
+    toJSON: {
+      virtuals: true,
+    },
   },
-  date: {
-    type: 'number',
-    required: true,
-  },
-  payed: {
-    type: 'boolean',
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  zoomLink: {
-    type: 'string',
-  },
-});
+);
 
 export const Appointment = mongoose.model<AppointmentModel>('Appointment', appointmentSchema);

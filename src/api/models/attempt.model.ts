@@ -8,21 +8,31 @@ export interface AttemptModel extends mongoose.Document {
   user: UserModel;
 }
 
-const attemptSchema = new mongoose.Schema({
-  ip: {
-    type: String,
+const attemptSchema = new mongoose.Schema(
+  {
+    ip: {
+      type: String,
+    },
+    port: {
+      type: String,
+    },
+    successful: {
+      type: Boolean,
+      default: false,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
-  port: {
-    type: String,
+  {
+    toObject: {
+      virtuals: true,
+    },
+    toJSON: {
+      virtuals: true,
+    },
   },
-  successful: {
-    type: Boolean,
-    default: false,
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
-});
+);
 
 export const Attempt = mongoose.model<AttemptModel>('Attempt', attemptSchema);

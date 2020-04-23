@@ -8,29 +8,39 @@ export interface PermissionModel extends mongoose.Document {
   childrens: PermissionModel[];
 }
 
-const permissionSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  level: {
-    type: Number,
-    required: true,
-  },
-  parent: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Permission',
-  },
-  childrens: [
-    {
+const permissionSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    level: {
+      type: Number,
+      required: true,
+    },
+    parent: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Permission',
     },
-  ],
-});
+    childrens: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Permission',
+      },
+    ],
+  },
+  {
+    toObject: {
+      virtuals: true,
+    },
+    toJSON: {
+      virtuals: true,
+    },
+  },
+);
 
 export const Permission = mongoose.model<PermissionModel>('Permission', permissionSchema);
