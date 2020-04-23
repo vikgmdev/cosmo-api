@@ -6,7 +6,7 @@ import { CosmobiologiaService } from '../services';
 export const natal = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     logger.debug('GET /cosmobiologia/natal : no params');
-    const result = await CosmobiologiaService.natal(req);
+    const result = await CosmobiologiaService.natal();
     logger.debug(`GET /cosmobiologia/natal response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();
@@ -18,7 +18,7 @@ export const natal = async (req: Request, res: Response, next: NextFunction): Pr
 export const progresado = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     logger.debug('GET /cosmobiologia/progresado : no params');
-    const result = await CosmobiologiaService.progresado(req);
+    const result = await CosmobiologiaService.progresado();
     logger.debug(`GET /cosmobiologia/progresado response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();
@@ -30,7 +30,7 @@ export const progresado = async (req: Request, res: Response, next: NextFunction
 export const life = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     logger.debug('GET /cosmobiologia/life : no params');
-    const result = await CosmobiologiaService.life(req);
+    const result = await CosmobiologiaService.life();
     logger.debug(`GET /cosmobiologia/life response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();

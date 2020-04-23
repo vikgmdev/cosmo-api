@@ -1,9 +1,9 @@
-import { Request } from 'express';
 import moment from 'moment';
 import { getCartaAstral } from '../../helpers/cosmobiologia/carta-astral';
 import { CartaAstral } from '../../helpers/cosmobiologia/cosmobiologia.constants';
 
-export const natal = async (req: Request): Promise<any> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const natal = async (): Promise<any> => {
   const dateTime = moment('1993-05-07T05:55:00+02:00').utc();
 
   const date = dateTime.format('D.M.YYYY');
@@ -13,7 +13,8 @@ export const natal = async (req: Request): Promise<any> => {
   return cartaAstral;
 };
 
-export const progresado = async (req: Request): Promise<any> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const progresado = async (): Promise<any> => {
   const timezone = '-06:00';
   const long = -103.33333333333333;
   const lat = 20.6666667;
@@ -47,7 +48,7 @@ const calculateChanges = (oldCA: CartaAstral, newCA: CartaAstral): boolean => {
   return false;
 };
 
-export const life = async (req: Request): Promise<CartaAstral[]> => {
+export const life = async (): Promise<CartaAstral[]> => {
   const timezone = '-06:00';
   const long = -103.33333333333333;
   const lat = 20.6666667;
