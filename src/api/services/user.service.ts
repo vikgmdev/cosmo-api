@@ -18,10 +18,10 @@ const getFiltersQuery = (queryParam: UserFilter): any => {
       orQuery.push(filter);
     }
 
-    if (query.fullName) {
+    if (query.fullname) {
       const filter = {
-        fullName: {
-          contains: query.fullName,
+        fullname: {
+          contains: query.fullname,
         },
       };
       orQuery.push(filter);
@@ -72,7 +72,7 @@ export const update = async (id: string, user: UserModel): Promise<UserModel> =>
 
   if (!userToUpdate) throw 'User does not exists';
 
-  if (user.fullName) userToUpdate.fullName = user.fullName;
+  if (user.fullname) userToUpdate.fullname = user.fullname;
   if (user.birthDayTime) userToUpdate.birthDayTime = user.birthDayTime;
   if (user.gender) userToUpdate.gender = user.gender;
   if (user.placeOfBirth) userToUpdate.placeOfBirth = user.placeOfBirth;

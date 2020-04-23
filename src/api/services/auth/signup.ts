@@ -5,7 +5,7 @@ import { Helpers } from '../../../helpers';
 import { logger } from '../../../core';
 import { Account } from '../../types';
 
-export const signup = async (email: string, password: string, fullName: string, req: Request): Promise<Account> => {
+export const signup = async (email: string, password: string, fullname: string, req: Request): Promise<Account> => {
   const newEmailAddress = email.toLowerCase();
 
   // Build up data for the new user record and save it to the database.
@@ -15,7 +15,7 @@ export const signup = async (email: string, password: string, fullName: string, 
       {
         email: newEmailAddress,
         password: await Helpers.utils.passwords.hashPassword(password),
-        fullName: fullName,
+        fullname: fullname,
         tosAcceptedByIp: req.ip,
       },
       Config.auth.verifyEmailAddresses
@@ -47,7 +47,7 @@ export const signup = async (email: string, password: string, fullName: string, 
       subject: 'Por favor confirme su cuenta',
       template: 'email-verify-account',
       templateData: {
-        fullName: fullName,
+        fullname: fullname,
         token: newUserRecord.emailProofToken,
       },
     });

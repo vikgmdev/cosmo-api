@@ -7,7 +7,10 @@ import { AppointmentService } from '../services';
 export const find = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     logger.debug(`GET /appointment : ${JSON.stringify(req.query)}`);
-    const result = await AppointmentService.find(req.query.filter || undefined, Helpers.utils.buildPaginationQuery(req.query));
+    const result = await AppointmentService.find(
+      req.query.filter || undefined,
+      Helpers.utils.buildPaginationQuery(req.query),
+    );
     logger.debug(`GET /appointment response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();

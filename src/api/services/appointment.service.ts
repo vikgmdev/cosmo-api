@@ -64,7 +64,6 @@ export const create = async (appointment: AppointmentModel): Promise<Appointment
   // TODO: Assign appointment to User token
   // TODO: Generate Zoom link
 
-
   return newAppointment;
 };
 

@@ -12,7 +12,7 @@ export interface UserModel extends mongoose.Document {
   // ACCOUNT DATA
   email: string;
   password: string;
-  fullName: string;
+  fullname: string;
 
   // AUTH DATA
   roles: RoleModel[] | string[];
@@ -64,7 +64,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    fullName: {
+    fullname: {
       type: String,
       required: true,
       maxlength: 120,

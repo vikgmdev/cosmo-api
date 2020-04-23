@@ -1,11 +1,11 @@
 export interface UserFilter {
   email: string;
-  fullName: string;
+  fullname: string;
 }
 
 export interface Account {
   email: string;
-  fullName: string;
+  fullname: string;
   accessToken: string;
   refreshToken: string;
 }
