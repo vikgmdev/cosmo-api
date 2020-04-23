@@ -5,7 +5,7 @@ export default function buildPaginationQuery(query: PaginationQuery): Pagination
   return {
     ...query,
     sort,
-    skip,
-    limit,
+    skip: Number(skip),
+    limit: Number(limit),
   };
 }
