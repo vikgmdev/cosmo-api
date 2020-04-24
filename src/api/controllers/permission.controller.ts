@@ -7,10 +7,8 @@ import { PermissionService } from '../services';
 export const find = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     logger.debug(`GET /permission/find : ${JSON.stringify(req.query)}`);
-    const result = await PermissionService.find(
-      req.query.filter || undefined,
-      Helpers.utils.buildPaginationQuery(req.query),
-    );
+    const { filter = '{}' } = req.query;
+    const result = await PermissionService.find(JSON.parse(filter), Helpers.utils.buildPaginationQuery(req.query));
     logger.debug(`GET /permission/find response: ${JSON.stringify(result)}`);
     res.status(HTTPStatus.OK).json(result);
     return next();
