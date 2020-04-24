@@ -5,7 +5,8 @@ import { Location } from '../types';
 
 export interface UserModel extends mongoose.Document {
   birthDayTime: number;
-  gender: number;
+  birthDayTimeZone: string;
+  gender: number; // 1 = male | 2 = female
   placeOfBirth: Location;
   placeOfResidence: Location;
 
@@ -31,6 +32,9 @@ const userSchema = new mongoose.Schema(
     // CUSTOM
     birthDayTime: {
       type: 'number',
+    },
+    birthDayTimeZone: {
+      type: 'string',
     },
     gender: {
       type: 'number',
@@ -139,7 +143,6 @@ const userSchema = new mongoose.Schema(
       },
     ],
   },
-
   {
     toObject: {
       virtuals: true,
