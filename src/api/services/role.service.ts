@@ -1,8 +1,8 @@
 import { PaginationQuery, RoleFilter, ResponsePagination } from '../types';
 import { Role, RoleModel, PermissionModel } from '../models';
+import { Helpers } from '../../helpers';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getFiltersQuery = (queryParam: RoleFilter): any => {
+const getFiltersQuery = (queryParam: RoleFilter): Record<string, string> => {
   let filters = {};
   const orQuery = [];
 
@@ -11,16 +11,14 @@ const getFiltersQuery = (queryParam: RoleFilter): any => {
 
     if (query.title) {
       const filter = {
-        title: {
-          contains: query.title,
-        },
+        title: Helpers.utils.stringToRegex(query.title),
       };
       orQuery.push(filter);
     }
 
     if (orQuery.length > 0) {
       filters = {
-        or: orQuery,
+        $or: orQuery,
       };
     }
   }
