@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 // This is your real test secret API key.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const stripe = require('stripe')('sk_test_Mmn5hJ5DpJ8bsbTYCXi51sap00Tow54UH2');
 import { version } from '../../../package.json';
 

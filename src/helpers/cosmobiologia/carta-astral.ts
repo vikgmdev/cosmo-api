@@ -14,7 +14,7 @@ const exec = promisify(require('child_process').exec);
 const execSweph = async (date: string, time: string, long: number, lat: number): Promise<string> => {
   try {
     const { stdout, stderr } = await exec(
-      `/home/vikgmdev/Documentos/Projects/hectorgarcia/hectorgarcia-api/sweph/swetest -edir/home/vikgmdev/Documentos/Projects/hectorgarcia/hectorgarcia-api/sweph -b${date} -ut${time} -p0123456789m -eswe -house${long},${lat},p -g -head -fPlsj`,
+      `/root/app/sweph/swetest -edir/root/app/sweph -b${date} -ut${time} -p0123456789m -eswe -house${long},${lat},p -g -head -fPlsj`,
       {
         encoding: 'utf8',
       },

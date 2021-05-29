@@ -1,7 +1,7 @@
 #Dockerfile for Development and Testing Environment
 #This file should not be used for production
-FROM node:12.13.0-alpine
-RUN apk add --no-cache tini bash
+FROM node:12-stretch
+RUN apt update && apt install bash
 WORKDIR /root/app
-ENTRYPOINT ["/sbin/tini", "--"]
+# ENTRYPOINT ["/sbin/tini", "--"]
 CMD npm run start

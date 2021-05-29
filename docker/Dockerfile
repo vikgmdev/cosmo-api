@@ -1,4 +1,4 @@
-FROM node:12.13.0-alpine AS base
+FROM node:12 AS base
 RUN apk add --no-cache tini
 WORKDIR /root/app
 ENTRYPOINT ["/sbin/tini", "--"]

@@ -8,11 +8,11 @@ endif
 
 SERVICE_NAME=hectorgarcia-api
 FULL_IMAGE_NAME=$(IMAGE):$(ENV)-`date +%s`
-DOCKERFILE := -f .docker/Dockerfile
+DOCKERFILE := -f docker/Dockerfile
 DOCKER_NETWORK_NAME=local-network
 DOCKER_NETWORK := $(shell docker network ls | grep $(DOCKER_NETWORK_NAME))
 
-COMPOSE_FILE_PATH := -f .docker/docker-compose.yml
+COMPOSE_FILE_PATH := -f docker/docker-compose.yml
 
 dc-build:
 	$(info Make: Building "$(ENV)" environment images.)

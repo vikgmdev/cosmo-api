@@ -1,15 +1,17 @@
 #Dockerfile for Development and Testing Environment
 #This file should not be used for production
-version: "3"
+version: '3'
 services:
   hectorgarcia-api:
     build:
+      args:
+        - TARGETPLATFORM=linux/amd64
       context: ../
-      dockerfile: .docker/Dockerfile.local
+      dockerfile: docker/Dockerfile.local
     depends_on:
       - hectorgarcia-db
     ports:
-      - "32800:3000"
+      - '32800:3000'
     links:
       - hectorgarcia-db
     environment:
@@ -26,11 +28,11 @@ services:
       - USE_AUTH=false
     volumes:
       - ../:/root/app
-      - ../../sweph:/root/sweph
+      - ../sweph:/root/sweph
   hectorgarcia-db:
     image: mongo:3.6
     ports:
-      - "32817:27017"
+      - '32817:27017'
     volumes:
       - hectorgarcia-mongodata:/data/db
 volumes:
