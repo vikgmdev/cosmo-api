@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+// This is your real test secret API key.
+const stripe = require('stripe')('sk_test_Mmn5hJ5DpJ8bsbTYCXi51sap00Tow54UH2');
 import { version } from '../../../package.json';
 
 interface HealthResult {
@@ -31,8 +33,17 @@ function getDatabaseConnectionStatus(): number {
   return 99;
 }
 
-export const health = (): HealthResult => {
+export const health = async (): Promise<HealthResult> => {
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 1400,
+    currency: 'usd',
+  });
+  console.log(paymentIntent);
   return {
+    // eslint-disable-next-line  @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    clientSecret: paymentIntent.client_secret,
     // eslint-disable-next-line  @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     mongoose: MongooseStatesMap[getDatabaseConnectionStatus()],

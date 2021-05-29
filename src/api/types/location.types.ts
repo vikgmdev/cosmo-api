@@ -1,4 +1,4 @@
-export interface Location {
-  lat: string;
-  long: string;
+export interface GeoLocation {
+  latitude: string;
+  longitude: string;
 }

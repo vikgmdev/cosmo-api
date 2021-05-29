@@ -1,6 +1,7 @@
 import { PaginationQuery, UserFilter, ResponsePagination } from '../types';
 import { User, UserModel } from '../models';
 import moment from 'moment';
+import geoTz from 'geo-tz';
 import { Helpers } from '../../helpers';
 
 const getFiltersQuery = (queryParam: UserFilter): Record<string, string> => {
@@ -41,7 +42,6 @@ export const find = async (
   // Run the query
   const totalCount = await User.estimatedDocumentCount();
   const query = getFiltersQuery(filter);
-  console.log(query);
   const items = await User.find(query)
     .populate('roles')
     .sort(paginationQuery.sort)
@@ -71,11 +71,37 @@ export const update = async (id: string, user: UserModel): Promise<UserModel> =>
   if (!userToUpdate) throw 'User does not exists';
 
   if (user.fullname) userToUpdate.fullname = user.fullname;
-  if (user.birthDayTime) userToUpdate.birthDayTime = moment(user.birthDayTime).valueOf();
-  if (user.birthDayTimeZone) userToUpdate.birthDayTimeZone = user.birthDayTimeZone;
   if (user.gender) userToUpdate.gender = user.gender; // 1 = male | 2 = female
-  if (user.placeOfBirth) userToUpdate.placeOfBirth = user.placeOfBirth;
-  if (user.placeOfResidence) userToUpdate.placeOfResidence = user.placeOfResidence;
+
+  if (user.birthDayTime) {
+    if (!moment(user.birthDayTime, 'YYYY-MM-DD HH:mm').isValid())
+      throw new Error('Property `birthDayTime` should be in format `YYYY-MM-DD HH:mm`');
+
+    userToUpdate.birthDayTime = user.birthDayTime;
+  }
+
+  if (user.placeOfBirth) {
+    const {
+      placeOfBirth: {
+        location: { latitude, longitude },
+      },
+    } = user;
+    const [tz] = geoTz(latitude, longitude);
+    userToUpdate.birthDayTimeZone = tz;
+    userToUpdate.placeOfBirth = user.placeOfBirth;
+  }
+
+  if (user.placeOfResidence) {
+    const {
+      placeOfResidence: {
+        location: { latitude, longitude },
+      },
+    } = user;
+    const [tz] = geoTz(latitude, longitude);
+    userToUpdate.placeOfResidenceTimeZone = tz;
+    userToUpdate.placeOfResidence = user.placeOfResidence;
+  }
+
   userToUpdate.save();
 
   return userToUpdate;

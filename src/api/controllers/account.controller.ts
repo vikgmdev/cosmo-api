@@ -15,6 +15,30 @@ export const me = async (req: Request, res: Response, next: NextFunction): Promi
   }
 };
 
+export const appointments = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug('GET /account/appointments : no params');
+    const result = await AccountService.appointments(req);
+    logger.debug(`GET /account/appointments response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
+
+export const nextAppointment = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    logger.debug('GET /account//appointments/next : no params');
+    const result = await AccountService.nextAppointment(req);
+    logger.debug(`GET /account//appointments/next response: ${JSON.stringify(result)}`);
+    res.status(HTTPStatus.OK).json(result);
+    return next();
+  } catch (err) {
+    return next(handleError(err));
+  }
+};
+
 export const updatePassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { currentPassword, newPassword } = req.body;

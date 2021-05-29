@@ -1,3 +1,20 @@
+// export interface CosmoQuery {
+//   d: string;
+//   t: string;
+//   a?: number;
+//   tz: string;
+//   lat: number;
+//   long: number;
+// }
+
+export interface CosmoQuery {
+  datetime: string;
+  years?: number;
+  timezone: string;
+  latitude: number;
+  longitude: number;
+}
+
 export interface CosmoInfo {
   planets: PlanetInfo[];
   houses: HouseInfo[];

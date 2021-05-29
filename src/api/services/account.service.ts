@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Helpers } from '../../helpers';
-import { User, UserModel } from '../models';
-import { ResponseSuccess } from '../types';
+import { User, UserModel, Appointment, AppointmentModel } from '../models';
+import { ResponseSuccess, ResponsePagination } from '../types';
 
 export const me = async (req: Request): Promise<UserModel> => {
   const token = await Helpers.token.getTokenFromRequest(req);
@@ -14,6 +14,40 @@ export const me = async (req: Request): Promise<UserModel> => {
   if (!user) throw 'tokenInvalid';
 
   return user;
+};
+
+export const appointments = async (req: Request): Promise<ResponsePagination<AppointmentModel>> => {
+  const user = req.me;
+
+  // Run the query
+  const totalCount = await Appointment.estimatedDocumentCount({ user: user.id });
+
+  const items = await Appointment.find({ user: user.id })
+    .populate('user')
+    .sort('-eventStartTime')
+    .skip(0)
+    .limit(50)
+    .exec();
+
+  return {
+    items,
+    totalCount,
+  };
+};
+
+export const nextAppointment = async (req: Request): Promise<AppointmentModel> => {
+  const user = req.me;
+
+  const item = await Appointment.findOne({ user: user.id, eventCanceled: false })
+    .populate('user')
+    .sort('-eventStartTime')
+    .skip(0)
+    .limit(50)
+    .exec();
+
+  if (!item) throw new Error('No appointments scheduled');
+
+  return item;
 };
 
 export const updatePassword = async (

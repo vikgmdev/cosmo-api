@@ -73,9 +73,6 @@ export const update = async (id: string, appointment: AppointmentModel): Promise
   if (!appointmentToUpdate) throw 'Appointment does not exists';
 
   if (appointment.comments) appointmentToUpdate.comments = appointment.comments;
-  if (appointment.confirmed) appointmentToUpdate.confirmed = appointment.confirmed;
-  if (appointment.date) appointmentToUpdate.date = appointment.date;
-  if (appointment.payed) appointmentToUpdate.payed = appointment.payed;
 
   appointmentToUpdate.save();
 

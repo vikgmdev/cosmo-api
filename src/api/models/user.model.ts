@@ -1,14 +1,24 @@
 import mongoose, { DocumentToObjectOptions } from 'mongoose';
 import { omit } from 'ramda';
 import { RoleModel } from './role.model';
-import { Location } from '../types';
+import { GeoLocation } from '../types';
+
+export interface UserLocation {
+  country: string;
+  countryCode: string;
+  city: string;
+  cityCode: string;
+  location: GeoLocation;
+}
 
 export interface UserModel extends mongoose.Document {
-  birthDayTime: number;
+  birthDayTime: string;
   birthDayTimeZone: string;
   gender: number; // 1 = male | 2 = female
-  placeOfBirth: Location;
-  placeOfResidence: Location;
+  placeOfBirth: UserLocation;
+  placeOfResidence: UserLocation;
+  placeOfResidenceTimeZone: string;
+  sign: string;
 
   // ACCOUNT DATA
   email: string;
@@ -31,7 +41,7 @@ const userSchema = new mongoose.Schema(
   {
     // CUSTOM
     birthDayTime: {
-      type: 'number',
+      type: 'string',
     },
     birthDayTimeZone: {
       type: 'string',
@@ -40,21 +50,13 @@ const userSchema = new mongoose.Schema(
       type: 'number',
       enum: [1, 2], // 1 = male | 2 = female
     },
-    placeOfBirth: {
-      lat: {
-        type: 'string',
-      },
-      long: {
-        type: 'string',
-      },
+    placeOfBirth: {},
+    placeOfResidence: {},
+    placeOfResidenceTimeZone: {
+      type: 'string',
     },
-    placeOfResidence: {
-      lat: {
-        type: 'string',
-      },
-      long: {
-        type: 'string',
-      },
+    sign: {
+      type: 'string',
     },
 
     // ACCOUNT DATA
