@@ -37,7 +37,7 @@
     "moment-timezone": "^0.5.35",
     "mongoose": "^5.9.7",
     "node-uuid": "^1.4.8",
-    "nodemailer": "^6.4.16",
+    "nodemailer": "^6.6.1",
     "pino": "^6.0.0",
     "pino-pretty": "^4.0.0",
     "ramda": "^0.27.0",
